@@ -16,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/auth', function (\Illuminate\Http\Request  $request){
+    \Illuminate\Support\Facades\Log::info(json_encode($request->all()));
+});

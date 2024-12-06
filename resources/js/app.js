@@ -1,9 +1,7 @@
-import router from './router';
-
 require('./bootstrap');
 
 window.Vue = require('vue');
-import router from '/routes/router'
+import router from './routes/router'
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
