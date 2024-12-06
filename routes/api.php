@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('leads')->as('leads.')->group(function (){
+    Route::get('/', [\App\Http\Controllers\LeadController::class, 'index'])->name('index');
+    Route::post('/add/contact', [\App\Http\Controllers\LeadController::class, 'addContact'])->name('add-contact');
+});
+
+Route::prefix('logs')->as('logs.')->group(function (){
+    Route::get('/', [\App\Http\Controllers\LogController::class, 'index'])->name('index');
 });
