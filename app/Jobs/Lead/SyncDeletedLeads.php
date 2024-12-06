@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class ImportLeadsJob implements ShouldQueue
+class SyncDeletedLeads implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -24,7 +24,7 @@ class ImportLeadsJob implements ShouldQueue
 
     public function handle()
     {
-        $data = $this->service->lead()->list($this->limit, $this->page, ['with' => 'contacts']);
+        $data = $this->service->lead()->list($this->limit, $this->page, ['with' => 'only_deleted']);
         $leads = collect(data_get($data, '_embedded.leads'));
 
         $leads->each(function ($lead) {
@@ -32,23 +32,9 @@ class ImportLeadsJob implements ShouldQueue
             $leadModel = Lead::query()->firstWhere('external_id', $external_id);
 
             if($leadModel){
-                if($leadModel->updated_at->timestamp === data_get($lead, 'updated_at')){
-                    return;
-                }
+                $leadModel->delete();
             }
-
-            $item = [
-                'name' => data_get($lead, 'name'),
-                'external_id' => data_get($lead, 'id'),
-                'price' => data_get($lead, 'price'),
-                'created_at' => data_get($lead, 'created'),
-                'updated_at' => data_get($lead, 'updated'),
-                'contacts' => collect(data_get($lead, '_embedded.contacts'))->pluck('id'),
-            ];
-
-            ImportLeadJob::dispatch($item);
         });
-
 
         if($this->limit === $leads->count()) {
             self::dispatch($this->page + 1, $this->limit);
