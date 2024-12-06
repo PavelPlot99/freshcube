@@ -2,7 +2,11 @@
 
 namespace App\Services\AmoCrmService\Resources;
 
+use App\Services\AmoCrmService\Concerns\BaseMethods;
+
 class ContactResource
 {
+    use BaseMethods;
+    private $baseUrl = '/api/v4/contacts';
 
 }
