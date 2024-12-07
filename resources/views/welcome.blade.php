@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laravel</title>
+    <title>Amo</title>
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">
-    <example-component></example-component>
+    <Navbar></Navbar>
+    <router-view></router-view>
 </div>
 
 <script src="{{ mix('js/app.js') }}"></script>

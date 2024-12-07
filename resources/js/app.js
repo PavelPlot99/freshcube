@@ -1,13 +1,16 @@
 require('./bootstrap');
-
 window.Vue = require('vue');
-import router from './routes/router'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
+import router from './routes/router';
+import Navbar from './components/Navbar.vue';
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-
+window.Swal = Swal;
 
 const app = new Vue({
     el: '#app',
-    router
+    router,
+    components: {
+        Navbar,
+    },
 });
