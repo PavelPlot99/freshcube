@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('leads')->as('leads.')->group(function (){
     Route::get('/', [\App\Http\Controllers\LeadController::class, 'index'])->name('index');
-    Route::post('/add/contact', [\App\Http\Controllers\LeadController::class, 'addContact'])->name('add-contact');
+    Route::get('/{lead}', [\App\Http\Controllers\LeadController::class, 'show'])->name('show');
+    Route::post('/{lead}', [\App\Http\Controllers\LeadController::class, 'addContact'])->name('add-contact');
 });
 
 Route::prefix('logs')->as('logs.')->group(function (){

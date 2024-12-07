@@ -20,3 +20,7 @@ Route::get('/', function () {
 Route::get('/auth', function (\Illuminate\Http\Request  $request){
     \Illuminate\Support\Facades\Log::info(json_encode($request->all()));
 });
+
+Route::get('/{any}', function () {
+    return view('welcome'); // Ваш главный шаблон Blade, где подключается Vue
+})->where('any', '.*');

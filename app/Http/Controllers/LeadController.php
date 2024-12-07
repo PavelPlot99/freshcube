@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\LeadAction;
+use App\Http\Requests\Lead\LinkContactRequest;
 use App\Http\Resources\Lead\IndexLeadResource;
 use App\Models\Lead;
+use App\Services\AmoCrmService\AmoCrmService;
+use Illuminate\Http\Request;
 
 class LeadController extends Controller
 {
@@ -14,8 +18,13 @@ class LeadController extends Controller
         return IndexLeadResource::collection($leads);
     }
 
-    public function addContact()
+    public function show(Lead $lead)
     {
+        return IndexLeadResource::make($lead);
+    }
 
+    public function addContact(LinkContactRequest $request, Lead $lead, LeadAction $action)
+    {
+        $action->addContact($request->validated(), $lead);
     }
 }
