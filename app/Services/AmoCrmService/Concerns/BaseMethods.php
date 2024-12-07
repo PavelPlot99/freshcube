@@ -22,4 +22,13 @@ trait BaseMethods
         );
     }
 
+    public function post(array $payload): array
+    {
+        return $this->service->post(
+            $this->service->buildRequestWithTokenAuth(),
+            $this->baseUrl,
+            $payload
+        );
+    }
+
 }

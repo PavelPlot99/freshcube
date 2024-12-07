@@ -3,14 +3,16 @@
 namespace App\Console\Commands;
 
 use App\Jobs\Contact\ImportContactsJob;
+use App\Jobs\Contact\SyncDeleteContacts;
 use App\Jobs\Lead\ImportLeadsJob;
+use App\Jobs\Lead\SyncDeletedLeads;
 use App\Services\AmoCrmService\AmoCrmService;
 use Illuminate\Console\Command;
 
-class Test extends Command
+class SyncAmoCrm extends Command
 {
 
-    protected $signature = 'app:test';
+    protected $signature = 'sync:amocrm';
 
 
     protected $description = 'Command description';
@@ -23,7 +25,9 @@ class Test extends Command
 
     public function handle()
     {
-//        ImportContactsJob::dispatch();
+        ImportContactsJob::dispatch();
         ImportLeadsJob::dispatch();
+        SyncDeleteContacts::dispatch();
+        SyncDeletedLeads::dispatch();
     }
 }
